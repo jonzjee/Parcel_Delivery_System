@@ -1,0 +1,147 @@
+# Operator Login:
+
+def login_as_operator():
+    operator_username = input("Enter operator username: ")
+    operator_password = input("Enter operator password: ")
+
+    if operator_username == "operator" and operator_password == "password":
+        print("Login successful!")
+
+    while operator_username != "operator" or operator_password != "password":
+        print("Invalid username or password.")
+        operator_username = input("Enter operator username: ")
+        operator_password = input("Enter operator password: ")
+
+login_as_operator()
+
+
+
+# Adding customer details:
+
+customers = []  # List to store customer details
+customer_id_counter = 1  # Counter to generate unique customer IDs
+
+
+def generate_customer_id():
+    global customer_id_counter
+    customer_id = f"CUST{customer_id_counter:04d}"
+    customer_id_counter += 1
+    return customer_id
+
+
+def add_customer():
+    name = input("Enter customer name: ")
+    address = input("Enter customer address: ")
+    telephone = input("Enter customer telephone number: ")
+
+    customer_id = generate_customer_id()
+
+    # Create a dictionary to hold the customer details
+    customer = {
+        "customer_id": customer_id,
+        "name": name,
+        "address": address,
+        "telephone": telephone
+    }
+
+    customers.append(customer)
+    print("Customer details added successfully!")
+
+
+def display_customers():
+    if len(customers) == 0:
+        print("No customer details found.")
+    else:
+        print("Customer Details:")
+        for customer in customers:
+            print(f"Customer ID: {customer['customer_id']}")
+            print(f"Name: {customer['name']}")
+            print(f"Address: {customer['address']}")
+            print(f"Telephone: {customer['telephone']}")
+            print()
+
+
+# Main program loop
+while True:
+    print("\n1. Add Customer Details")
+    print("2. Display Customer Details")
+    print("3. Quit")
+    print("4. Modify Customer Details")
+
+    choice = input("Enter your choice (1-4): ")
+
+    if choice == "1":
+        repeat = input("Would you like to add a customer? (Y/N) ").strip().lower()
+        if repeat == "y":
+            add_customer()
+        if repeat == "n":
+            display_customers()
+        else:
+            print("Invalid option") and display_customers()
+
+    elif choice == "2":
+        display_customers()
+    elif choice == "3":
+        break
+
+    elif choice == "4":
+        modify = input("Would you Like to modify customer's details? (Y/N)").strip().lower()
+        if modify == "y":
+            def find_customer_by_id(customer_id):
+                for customer in customers:
+                    if customer['customer_id'] == customer_id:
+                        return customer
+                return None
+
+
+            def modify_customer_details():
+                customer_id = input("Enter customer ID: ")
+
+                # Find the customer in the list
+                customer = find_customer_by_id(customer_id)
+
+                if customer is None:
+                    print("Customer not found.")
+                    return
+
+                print("Current Customer Details:")
+                print(f"Customer ID: {customer['customer_id']}")
+                print(f"Name: {customer['name']}")
+                print(f"Address: {customer['address']}")
+                print(f"Telephone: {customer['telephone']}")
+
+                new_address = input("Enter new address: ")
+                new_telephone = input("Enter new telephone number: ")
+
+                # Confirm the changes with the customer
+                confirmation = input("Please confirm the changes (Y/N): ").strip().lower()
+
+                if confirmation == "y":
+                    # Update the customer details
+                    customer['address'] = new_address
+                    customer['telephone'] = new_telephone
+                    print("Customer details updated successfully!")
+                else:
+                    print("Changes not confirmed. Customer details not updated.")
+
+
+            def display_customers():
+                if len(customers) == 0:
+                    print("No customer details found.")
+                else:
+                    print("Customer Details:")
+                    for customer in customers:
+                        print(f"Customer ID: {customer['customer_id']}")
+                        print(f"Name: {customer['name']}")
+                        print(f"Address: {customer['address']}")
+                        print(f"Telephone: {customer['telephone']}")
+                        print()
+            modify_customer_details() and display_customers()
+        if modify == "n":
+            print("No Changes are made. Customer details has not been updated.") and display_customers()
+    else:
+        print("Invalid choice. Please try again.")
+
+
+
+
